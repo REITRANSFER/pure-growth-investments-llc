@@ -15,7 +15,7 @@ export default function PrivacyPage() {
       <div className="border-b border-gray-200 bg-white">
         <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
           <Link href="/"><img src={config.logoUrl} alt={config.companyName} className="h-16 w-auto" /></Link>
-          <Link href="/" className="text-sm font-medium transition-colors" style={{ color: "var(--accent-brand)" }}>\u2190 Back to Home</Link>
+          <Link href="/" className="text-sm font-medium transition-colors" style={{ color: "var(--accent-brand)" }}>← Back to Home</Link>
         </div>
       </div>
       <div className="mx-auto max-w-3xl px-6 py-16">
