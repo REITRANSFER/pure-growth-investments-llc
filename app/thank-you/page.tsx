@@ -1,20 +1,18 @@
 "use client"
 
-import { useEffect } from "react"
 import { CheckCircle2, Phone, Clock, Shield } from "lucide-react"
 import { FooterLinks } from "@/components/polar/footer-links"
+import { LeadEvent } from "@/components/tracking/lead-event"
 import { getConfig } from "@/lib/config"
 
 const config = getConfig()
 const heroVideoUrl = process.env.NEXT_PUBLIC_HERO_VIDEO_URL || ""
 
 export default function ThankYouPage() {
-  useEffect(() => {
-    try { if (window.fbq) window.fbq("track", "Lead") } catch {}
-  }, [])
-
   return (
     <main className="relative min-h-screen bg-gray-50">
+      <LeadEvent />
+
       <div className="py-16 md:py-24" style={{ background: "linear-gradient(to bottom, color-mix(in srgb, var(--accent-brand) 10%, transparent), transparent)" }}>
         <div className="mx-auto max-w-3xl px-4 text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#22c55e]/10">
