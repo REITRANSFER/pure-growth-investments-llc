@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 
+/** Fires Meta Pixel Lead event on mount. Polls for fbq readiness (10s timeout). */
 export function LeadEvent() {
   useEffect(() => {
     let attempts = 0
