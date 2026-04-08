@@ -17,8 +17,8 @@ export function HeroSection() {
     const state = details.state?.toUpperCase() || "";
     const county = details.county || "";
 
-    const stateOk = config.serviceStates.length === 0 || config.serviceStates.includes(state);
-    const countyOk = !config.serviceArea || config.serviceArea === "Your Area" || county.toLowerCase().includes(config.serviceArea.toLowerCase());
+    const stateOk = config.serviceStates.length === 0 || config.serviceStates.includes("US") || config.serviceStates.includes(state);
+    const countyOk = !config.serviceArea || config.serviceArea === "Your Area" || config.serviceArea === "Nationwide" || county.toLowerCase().includes(config.serviceArea.toLowerCase());
 
     if (stateOk && countyOk) {
       setInitialAddress(address);
