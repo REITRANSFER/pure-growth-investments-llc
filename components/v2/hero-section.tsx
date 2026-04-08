@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, ArrowDown, Shield, Clock, DollarSign } from "lucide-react";
 import { SurveyCard } from "@/components/v2/survey-card";
-import { AddressAutocomplete, type AddressDetails } from "@/components/survey/address-autocomplete";
+import { AddressAutocomplete } from "@/components/survey/address-autocomplete";
 import { getConfig } from "@/lib/config";
 
 const config = getConfig();
@@ -11,22 +11,10 @@ const config = getConfig();
 export function HeroSection() {
   const [showSurvey, setShowSurvey] = useState(false);
   const [initialAddress, setInitialAddress] = useState("");
-  const [outsideAreaError, setOutsideAreaError] = useState(false);
 
-  const handleAddressSelect = (address: string, details: AddressDetails) => {
-    const state = details.state?.toUpperCase() || "";
-    const county = details.county || "";
-
-    const stateOk = config.serviceStates.length === 0 || config.serviceStates.includes("US") || config.serviceStates.includes(state);
-    const countyOk = !config.serviceArea || config.serviceArea === "Your Area" || config.serviceArea === "Nationwide" || county.toLowerCase().includes(config.serviceArea.toLowerCase());
-
-    if (stateOk && countyOk) {
-      setInitialAddress(address);
-      setOutsideAreaError(false);
-      setShowSurvey(true);
-    } else {
-      setOutsideAreaError(true);
-    }
+  const handleAddressSelect = (address: string) => {
+    setInitialAddress(address);
+    setShowSurvey(true);
   };
 
   return (
@@ -70,7 +58,7 @@ export function HeroSection() {
               <div className="relative">
                 <AddressAutocomplete
                   value={initialAddress}
-                  onChange={(address) => { setInitialAddress(address); setOutsideAreaError(false); }}
+                  onChange={(address) => { setInitialAddress(address); }}
                   onSelect={handleAddressSelect}
                   placeholder={`Enter your ${config.serviceArea} area address...`}
                   bounds={config.serviceBounds || undefined}
@@ -85,11 +73,6 @@ export function HeroSection() {
                 Get My Free Cash Offer
                 <ArrowRight className="h-6 w-6" />
               </button>
-              {outsideAreaError && (
-                <p className="text-center text-sm font-medium" style={{ color: "#dc2626" }}>
-                  {`Sorry, we only buy homes in ${config.serviceArea}. Please enter a local address.`}
-                </p>
-              )}
               <p className="text-center text-[#94A3B8] text-sm">
                 Takes less than 2 minutes. No obligation.
               </p>

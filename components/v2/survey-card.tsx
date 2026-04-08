@@ -5,7 +5,7 @@ import { Home, ArrowRight, ArrowLeft, ArrowDown, Check, XCircle } from "lucide-r
 import { Button } from "@/components/ui/button"
 import { captureTrackingData, getIPAddress } from "@/lib/tracking"
 import { Input } from "@/components/ui/input"
-import { AddressAutocomplete, type AddressDetails } from "@/components/survey/address-autocomplete"
+import { AddressAutocomplete } from "@/components/survey/address-autocomplete"
 import { getConfig } from "@/lib/config"
 
 const config = getConfig()
@@ -272,21 +272,10 @@ export function SurveyCard({ initialAddress }: SurveyCardProps = {}) {
     setTimeout(() => { if (step < totalSteps) setStep(step + 1) }, 300)
   }
 
-  const handleAddressSelect = (address: string, details: AddressDetails) => {
+  const handleAddressSelect = (address: string) => {
     setSurveyData({ ...surveyData, address })
     setAddressVerified(true)
-
-    const state = details.state?.toUpperCase() || ""
-    const county = details.county || ""
-
-    const stateOk = config.serviceStates.length === 0 || config.serviceStates.includes(state)
-    const countyOk = !config.serviceArea || config.serviceArea === "Your Area" || county.toLowerCase().includes(config.serviceArea.toLowerCase())
-    if (stateOk && countyOk) {
-      setTimeout(() => { setStep(2) }, 300)
-      return
-    }
-
-    setTimeout(() => { setDisqualifyReason("outsideArea"); setIsDisqualified(true) }, 300)
+    setTimeout(() => { setStep(2) }, 300)
   }
 
   const renderOptionButton = (
@@ -328,11 +317,6 @@ export function SurveyCard({ initialAddress }: SurveyCardProps = {}) {
         title: "We're Unable to Make an Offer",
         message: "Unfortunately, properties owned for less than 3 years typically don't have enough equity for us to make a fair cash offer.",
         detail: "If your situation changes or you'd like to discuss your options, feel free to give us a call. We're always happy to help.",
-      },
-      outsideArea: {
-        title: "We Don't Service That Area Yet",
-        message: `We currently buy homes in ${config.serviceArea}.`,
-        detail: `If you have a property in ${config.serviceArea} that you\'d like to sell, feel free to submit that address. We\'d love to help.`,
       },
     }
     const msg = disqualifyMessages[disqualifyReason] || disqualifyMessages.notOwner
